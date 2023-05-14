@@ -1,7 +1,7 @@
 #include "Server.h"
 
 Server::Server(const char *port) {
-    server = new SocketServer(port);
+    server = new Engine::SocketServer(port);
 
     serverInfo["version"]["name"] = "1.19.4";
     serverInfo["version"]["protocol"] = 762;
@@ -9,9 +9,9 @@ Server::Server(const char *port) {
     serverInfo["players"]["online"] = 0;
     serverInfo["description"] = "Custom C++ Minecraft server core\nIn development";
 
-    if (File::exists("./favicon.png")) {
+    if (Engine::Filesystem::exists("./favicon.png")) {
         int size = 0;
-        const char *data = File::readFile("./favicon.png", &size);
+        const char *data = Engine::Filesystem::readFile("./favicon.png", &size);
         std::string base64 = Base64::base64_encode(reinterpret_cast<const BYTE *>(data), size);
         static const char *prefix = "data:image/png;base64,";
         int bsize = (int) strlen(prefix) + base64.size() + 1;
@@ -35,7 +35,7 @@ void Server::run() {
 
 void Server::listenSockets() {
     while (!shouldClose) {
-        auto socket = server->acceptSocket();
+        auto socket = server->accept();
         auto connection = new Connection(&connections, &serverInfoBuffer, socket);
         connections.push_back(connection);
     }

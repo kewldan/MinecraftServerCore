@@ -1,16 +1,16 @@
 #pragma once
 
-#include "SocketServer.h"
+#include "network/SocketServer.h"
 #include "json.hpp"
 #include <vector>
 #include "Connection.h"
 #include <thread>
-#include "File.h"
+#include "io/Filesystem.h"
 #include "Base64.h"
 
 class Server {
 private:
-    SocketServer *server;
+    Engine::SocketServer *server;
     std::vector<Connection *> connections;
     nlohmann::json serverInfo;
     char *serverInfoBuffer;

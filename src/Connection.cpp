@@ -105,7 +105,7 @@ void Connection::listenPackages() {
                 buffer->writeString("minecraft:the_end");
                 buffer->writeString("minecraft:the_nether");
                 int size = 0;
-                const char *data = File::readFile("registry-codec.nbt", &size);
+                const char *data = Engine::Filesystem::readFile("registry-codec.nbt", &size);
                 buffer->writeArray(data, size); // Registry codec
                 buffer->writeString("minecraft:overworld"); // Dimension type
                 buffer->writeString("minecraft:overworld"); // Dimension name

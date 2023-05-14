@@ -11,15 +11,25 @@ include_directories(
         "${LIBRARIES_PATH}/nbt"
         "${LIBRARIES_PATH}/bson"
         "${LIBRARIES_PATH}/b64"
+        "${LIBRARIES_PATH}/engine/include"
         include
 )
 
 link_directories("${LIBRARIES_PATH}/zlib/lib")
 
 file(GLOB SRCS
-        src/*.cpp include/*.h)
+        src/*.cpp include/*.h
+        )
 
-add_executable(${PROJECT_NAME} ${SRCS} main.cpp "${LIBRARIES_PATH}/b64/Base64.cpp")
+file(GLOB ENGINE_SRCS
+        ${LIBRARIES_PATH}/engine/src/network/*.cpp
+        ${LIBRARIES_PATH}/engine/include/network/*.h
+
+        ${LIBRARIES_PATH}/engine/src/io/*.cpp
+        ${LIBRARIES_PATH}/engine/include/io/*.h
+        )
+
+add_executable(${PROJECT_NAME} ${ENGINE_SRCS} ${SRCS} main.cpp "${LIBRARIES_PATH}/b64/Base64.cpp")
 
 target_link_libraries(${PROJECT_NAME}
         debug zlibstaticd

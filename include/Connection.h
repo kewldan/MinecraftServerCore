@@ -4,7 +4,8 @@
 #include <thread>
 #include <plog/Log.h>
 #include "Buffer.h"
-#include "File.h"
+#include "io/Filesystem.h"
+#include <algorithm>
 
 char *uuid_to_string(char *id, char *out);
 

@@ -11,13 +11,13 @@ class VInt {
 public:
     explicit VInt(int val);
 
-    static VInt read(SOCKET socket);
+    static VInt *read(SOCKET socket);
 
-    static VInt read(const char *buffer);
+    static VInt *read(const char *buffer);
 
-    int write(char* buffer) const;
+    int write(char *buffer) const;
 
-    int getSize();
+    int getSize() const;
 
     int getValue() const;
 

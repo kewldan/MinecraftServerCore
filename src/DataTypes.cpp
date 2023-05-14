@@ -1,31 +1,34 @@
 #include "DataTypes.h"
 
- VInt VInt::read(SOCKET socket) {
-    VInt val(0);
+VInt *VInt::read(SOCKET socket) {
+    auto val = new VInt(0);
     int position = 0;
     char currentByte;
 
     while (true) {
-        recv(socket, &currentByte, 1, 0);
-        val.value |= (currentByte & SEGMENT_BITS) << position;
+        if (recv(socket, &currentByte, 1, 0) == 1) {
+            val->value |= (currentByte & SEGMENT_BITS) << position;
 
-        if ((currentByte & CONTINUE_BIT) == 0) break;
+            if ((currentByte & CONTINUE_BIT) == 0) break;
 
-        position += 7;
+            position += 7;
+        } else {
+            return nullptr;
+        }
     }
 
     return val;
 }
 
-VInt VInt::read(const char *buffer) {
-    VInt val(0);
+VInt *VInt::read(const char *buffer) {
+    auto val = new VInt(0);
     int position = 0;
     char currentByte;
     int i = 0;
 
     while (true) {
         currentByte = buffer[i];
-        val.value |= (currentByte & SEGMENT_BITS) << position;
+        val->value |= (currentByte & SEGMENT_BITS) << position;
 
         if ((currentByte & CONTINUE_BIT) == 0) break;
 
@@ -54,7 +57,7 @@ int VInt::write(char *buffer) const {
     return count;
 }
 
-int VInt::getSize() {
+int VInt::getSize() const {
     int size = 0;
     int val = this->value;
     do {

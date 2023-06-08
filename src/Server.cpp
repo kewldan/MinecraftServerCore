@@ -1,7 +1,7 @@
 #include "Server.h"
 
-Server::Server(const char *port) {
-    server = new Engine::SocketServer(port);
+Server::Server(short port) {
+    server = new TcpServerSocket("0.0.0.0", port);
 
     serverInfo["version"]["name"] = "1.19.4";
     serverInfo["version"]["protocol"] = 762;

@@ -12,6 +12,7 @@ include_directories(
         "${LIBRARIES_PATH}/bson"
         "${LIBRARIES_PATH}/b64"
         "${LIBRARIES_PATH}/engine/include"
+        "${LIBRARIES_PATH}/sockets"
         include
 )
 

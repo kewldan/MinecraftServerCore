@@ -1,6 +1,6 @@
 #pragma once
 
-#include "network/SocketServer.h"
+#include "TcpServerSocket.hpp"
 #include "json.hpp"
 #include <vector>
 #include "Connection.h"
@@ -10,7 +10,7 @@
 
 class Server {
 private:
-    Engine::SocketServer *server;
+    TcpServerSocket *server;
     std::vector<Connection *> connections;
     nlohmann::json serverInfo;
     char *serverInfoBuffer;
@@ -20,7 +20,7 @@ private:
     void listenSockets();
     void tickLoop();
 public:
-    explicit Server(const char *port);
+    explicit Server(short port);
 
     void run();
 };
